@@ -94,8 +94,8 @@ $$
 $e^{-x} = 0$ when $x\rightarrow\infty$. The target function of soft margin SVM with rbf kernel will be 
 
 $$
-\text{min}_\alpha \text{lim}_{\gamma \rightarrow \infty}\frac{1}{2} \sum_{n,m} \alpha_n\alpha_my_ny_me^{-\gamma||x-x'||^2} + \sum_n \alpha_n
-= \text{min}_\alpha \sum_n \alpha_n
+\text{min}_\alpha \text{lim}_{\gamma \rightarrow \infty}\frac{1}{2} \sum_{n,m} \alpha_n\alpha_my_ny_me^{-\gamma||x_n-x_m||^2} - \sum_n \alpha_n
+= \text{min}_\alpha -\sum_n\alpha_n
 $$
 with constraint $\sum_n y_n \alpha_n = 0$ and $0 \leq \alpha_n \leq C$.
 
@@ -105,7 +105,7 @@ The optimal $\bm{\alpha}$ will be all-$C$ vector.
 \section*{4}
 % \begin{equation*}
 %     \begin{split}
-%         L_{mse} &= \frac{1}{N} \sum_{n=1}^N (h(x_n) - f(x_n))^2 \\
+%         L_{mse} &= \frac{1}{N} \sum_{n=1}^N (h(x_n) - f(x_n))^2 \\ 
 %         &= \frac{1}{N} \sum_{n=1}^N (w_1x_n + w_0 - x_n + x_n^2)^2 
 %     \end{split}
 % \end{equation*}
@@ -253,8 +253,24 @@ and $\sqrt{\epsilon_t(1-\epsilon_t)} \leq \sqrt{\epsilon(1-\epsilon)}$ since
 $\epsilon_t \leq \epsilon < \frac{1}{2}$
 
 \section*{18}
+\begin{equation*}
+\begin{split}
+    E_{in}(G_T) &\leq U_{T+1} \\
+    &\leq 2 U_T \sqrt{\epsilon(1-\epsilon)} \\
+    &= U_1 (2 \sqrt{\epsilon(1-\epsilon)})^T \\
+    &\leq (e^{-2(\frac{1}{2}-\epsilon)^2})^T
+\end{split}
+\end{equation*}
 
+$e^{-2T(\frac{1}{2}-\epsilon)^2}$ will decrease as $T$ gets larger.
 
+Because $T$ is discrete, we only need to prove that 
+after $T=O(\log N)$ $E_{in}(G_T)$ becomes $\frac{1}{N}$.
+Let
+
+$$ (e^{-2(\frac{1}{2}-\epsilon)^2})^T = \frac{1}{N}$$
+
+$$ T = \frac{-\log N}{ \log e^{-2(\frac{1}{2}-\epsilon)^2}} = \frac{\log N}{2(\frac{1}{2}-\epsilon)^2} = O(\log N)$$
 \end{document}
 
 
