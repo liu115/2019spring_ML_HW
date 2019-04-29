@@ -31,6 +31,7 @@ def p13():
 
     print (G.g_list[-1].score(train_X, train_y))
 
+    plt.clf()
     plt.plot(np.arange(max_iter), e_ins)
     plt.savefig('p13.png')
 
@@ -47,6 +48,7 @@ def p14():
 
     print (G.score(train_X, train_y))
 
+    plt.clf()
     plt.plot(np.arange(max_iter), e_ins)
     plt.savefig('p14.png')
 
@@ -63,6 +65,7 @@ def p15():
 
     print(U_list[-1])
 
+    plt.clf()
     plt.plot(np.arange(max_iter), U_list)
     plt.savefig('p15.png')
 
@@ -80,10 +83,18 @@ def p16():
 
     print (e_ins[-1])
 
+    plt.clf()
     plt.plot(np.arange(max_iter), e_ins)
     plt.savefig('p16.png')
 
 def main():
+    print('######### P13')
+    p13()
+    print('######### P14')
+    p14()
+    print('######### P15')
+    p15()
+    print('######### P16')
     p16()
 
 main()

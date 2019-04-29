@@ -12,7 +12,7 @@ def weighted_zero_one_error(pred_y, label_y, weight):
     assert pred_y.shape == label_y.shape
     assert pred_y.shape == weight.shape
     yy = np.sign(pred_y * label_y)
-    return np.sum((yy < 0).astype(np.int) * weight) * 1. / pred_y.shape[0]
+    return np.sum((yy < 0).astype(np.int) * weight) / np.sum(weight)
 
 
 class g(object):
@@ -61,8 +61,6 @@ class DecisionStump(g):
                         min_feature_idx = i
                         min_cut = cut
                         min_err = err
-        print('Min error', min_err)
-        # print(X, y)
         self.s = min_s
         self.feature_idx = min_feature_idx
         self.cut = min_cut
@@ -74,7 +72,6 @@ class DecisionStump(g):
         else:
             error = zero_one_error(pred_y, y)
 
-        # print(pred_y, y, error)
         return error
 
     def _predict(self, X, s, feature_idx, cut):
@@ -129,7 +126,7 @@ class AdaBoost(object):
         return (new X_weight) and (scaling factor)
         '''
 
-        error = g.score(X, y, X_weight) / np.sum(X_weight)
+        error = g.score(X, y, X_weight)
         scale_factor = np.sqrt((1 - error) / error)
         new_weight = np.copy(X_weight)
 
@@ -154,8 +151,7 @@ class AdaBoost(object):
             self.weight_list.append(X_weight)
             current_g = self.g_class()
             current_g.fit(X, y, X_weight)
-            print('iter={}'.format(i+1), current_g)
-            # print(X_weight[:10])
+            # print('iter={}'.format(i+1), current_g)
             self.g_list.append(current_g)
             X_weight, scale_factor = self._update_weight(X, y, X_weight, current_g)
 
